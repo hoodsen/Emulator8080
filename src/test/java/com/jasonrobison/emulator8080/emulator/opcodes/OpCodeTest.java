@@ -503,6 +503,25 @@ public class OpCodeTest {
 		assertEquals((short)0x0002, cpu.getRegisters().getProgramCounter());
 	}
 	
+	/**
+	 * 0x6f
+	 * MOV L,A
+	 * L <- A
+	 */
+	@Test
+	public void movLA() {
+		cpu.getMemory()[0] = (byte)0x6f;
+		cpu.getRegisters().setProgramCounter((short)0x0000);
+		
+		cpu.getRegisters().setA((byte)0xcd);
+		cpu.getRegisters().setC((byte)0x00);
+		
+		OpCodes.movLA().execute(cpu);
+		
+		assertEquals((byte)0xcd, cpu.getRegisters().getL());
+		assertEquals((short)0x0001, cpu.getRegisters().getProgramCounter());
+	}
+	
 	
 	
 	

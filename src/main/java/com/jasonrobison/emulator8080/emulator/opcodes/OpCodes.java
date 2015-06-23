@@ -361,6 +361,23 @@ public class OpCodes {
 		};
 	}
 	
+	/**
+	 * 0x6f
+	 * MOV L,A
+	 * L <- A
+	 */
+	public static OpCode movLA() {
+		return new OpCode() {
+			public void execute(Cpu cpu) {
+				LOGGER.debug(getCurrentAddressAsString(cpu) + "MOV L,A ");
+				
+				cpu.getRegisters().setL(cpu.getRegisters().getA());
+				cpu.getRegisters().incrementProgramCounter();
+			}
+		};
+	}
+	
+	
 	private static void pushWordToStack(short word, Cpu cpu) {
 		cpu.getMemory()[cpu.getRegisters().getStackPointer() - 1] = (byte)((word >>> 8) & 0xff);
 		cpu.getMemory()[cpu.getRegisters().getStackPointer() - 2] = (byte)(word  & 0x00ff);
