@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jasonrobison</groupId>
-	<artifactId>CpuEmulator8080</artifactId>
+	<artifactId>Emulator8080</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CpuEmulator8080</name>
-	<description>My little emulator in progress for fun for the 8080</description>
+	<name>Emulator8080</name>
+	<description>My WIP 8080 Emulator</description>
 
 	<properties>
 		<powermock.version>1.5.6</powermock.version>
@@ -63,4 +63,36 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2-beta-4</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.jasonrobison.emulator8080.emulator.Emulator</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

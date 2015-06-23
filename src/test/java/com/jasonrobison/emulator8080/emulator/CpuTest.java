@@ -58,21 +58,11 @@ public class CpuTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testProgram() throws IOException {
 		Emulator emulator = new Emulator();
-		emulator.loadGameIntoMemory("null");
+		emulator.loadGameIntoMemory("/Users/jason/Downloads/invaders");
 		emulator.executeGame();
-	}
-	
-	@Test
-	public void callsNop() {
-		PowerMockito.mockStatic(OpCodes.class);
-		
-		sut.setMemory(new byte[1]);
-		sut.executeProgram();
-
-		PowerMockito.verifyStatic();
-		OpCodes.nop();
 	}
 	
 	@Test
