@@ -31,6 +31,7 @@ public class Cpu {
 		opcodeExecutors.put((byte) 0x0e, OpCodes.movC());
 		opcodeExecutors.put((byte) 0x11, OpCodes.lxiDD16());
 		opcodeExecutors.put((byte) 0x13, OpCodes.inxD());
+		opcodeExecutors.put((byte) 0x19, OpCodes.addHlDe());
 		opcodeExecutors.put((byte) 0x1a, OpCodes.ldaxD());
 		opcodeExecutors.put((byte) 0x21, OpCodes.lxiHD16());
 		opcodeExecutors.put((byte) 0x23, OpCodes.inxH());

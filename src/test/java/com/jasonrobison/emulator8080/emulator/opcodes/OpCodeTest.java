@@ -562,4 +562,46 @@ public class OpCodeTest {
 		assertTrue(cpu.getFlags().isCarry());
 	}
 	
+	/**
+	 * 0x19	DAD D
+	 * CY	
+	 * HL = HL + DE
+	 */
+	@Test
+	public void addHlDeNoCarry() {
+		cpu.getMemory()[0] = (byte)0x29;
+		cpu.getRegisters().setProgramCounter((short)0x0000);
+		cpu.getFlags().setCarry(false);
+		
+		cpu.getRegisters().setHL((short)0x0e0a);
+		cpu.getRegisters().setDE((short)0x0e09);
+		
+		OpCodes.addHlDe().execute(cpu);
+		
+		assertEquals((short)0x1c13, cpu.getRegisters().getHL());
+		assertEquals((short)0x0001, cpu.getRegisters().getProgramCounter());
+		assertFalse(cpu.getFlags().isCarry());
+	}
+	
+	/**
+	 * 0x19	DAD D
+	 * CY	
+	 * HL = HL + DE
+	 */
+	@Test
+	public void addHlDeWithCarry() {
+		cpu.getMemory()[0] = (byte)0x29;
+		cpu.getRegisters().setProgramCounter((short)0x0000);
+		cpu.getFlags().setCarry(false);
+		
+		cpu.getRegisters().setHL((short)0xcccc);
+		cpu.getRegisters().setDE((short)0xcccd);
+		
+		OpCodes.addHlDe().execute(cpu);
+		
+		assertEquals((short)0x9999, cpu.getRegisters().getHL());
+		assertEquals((short)0x0001, cpu.getRegisters().getProgramCounter());
+		assertTrue(cpu.getFlags().isCarry());
+	}
+	
 }

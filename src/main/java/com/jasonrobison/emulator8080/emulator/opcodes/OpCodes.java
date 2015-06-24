@@ -393,6 +393,22 @@ public class OpCodes {
 		};
 	}
 	
+	/**
+	 * 0x19	DAD D
+	 * CY	
+	 * HL = HL + DE
+	 */
+	public static OpCode addHlDe() {
+		return new OpCode() {
+			public void execute(Cpu cpu) {
+				LOGGER.debug(getCurrentAddressAsString(cpu) + "ADD HL,DE ");
+				
+				cpu.getRegisters().setHL(addWords(cpu.getRegisters().getHL(), cpu.getRegisters().getDE(), cpu));
+				cpu.getRegisters().incrementProgramCounter();
+			}
+		};
+	}
+	
 	
 	private static void pushWordToStack(short word, Cpu cpu) {
 		cpu.getMemory()[cpu.getRegisters().getStackPointer() - 1] = (byte)((word >>> 8) & 0xff);
