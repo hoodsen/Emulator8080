@@ -522,8 +522,44 @@ public class OpCodeTest {
 		assertEquals((short)0x0001, cpu.getRegisters().getProgramCounter());
 	}
 	
+	/**
+	 * 0x29	DAD H
+	 * CY	
+	 * HL = HL + HL
+	 */
+	@Test
+	public void addHlHl() {
+		cpu.getMemory()[0] = (byte)0x29;
+		cpu.getRegisters().setProgramCounter((short)0x0000);
+		cpu.getFlags().setCarry(false);
+		
+		cpu.getRegisters().setHL((short)0x0e0a);
+		
+		OpCodes.addHlHl().execute(cpu);
+		
+		assertEquals((short)0x1c14, cpu.getRegisters().getHL());
+		assertEquals((short)0x0001, cpu.getRegisters().getProgramCounter());
+		assertFalse(cpu.getFlags().isCarry());
+	}
 	
-	
-	
+	/**
+	 * 0x29	DAD H
+	 * CY	
+	 * HL = HL + HL
+	 */
+	@Test
+	public void addHlHlIsCarry() {
+		cpu.getMemory()[0] = (byte)0x29;
+		cpu.getRegisters().setProgramCounter((short)0x0000);
+		cpu.getFlags().setCarry(false);
+		
+		cpu.getRegisters().setHL((short)0xcccc);
+		
+		OpCodes.addHlHl().execute(cpu);
+		
+		assertEquals((short)0x9998, cpu.getRegisters().getHL());
+		assertEquals((short)0x0001, cpu.getRegisters().getProgramCounter());
+		assertTrue(cpu.getFlags().isCarry());
+	}
 	
 }

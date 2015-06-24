@@ -377,6 +377,22 @@ public class OpCodes {
 		};
 	}
 	
+	/**
+	 * 0x29	DAD H
+	 * CY	
+	 * HL = HL + HL
+	 */
+	public static OpCode addHlHl() {
+		return new OpCode() {
+			public void execute(Cpu cpu) {
+				LOGGER.debug(getCurrentAddressAsString(cpu) + "ADD HL,HL ");
+				
+				cpu.getRegisters().setHL(addWords(cpu.getRegisters().getHL(), cpu.getRegisters().getHL(), cpu));
+				cpu.getRegisters().incrementProgramCounter();
+			}
+		};
+	}
+	
 	
 	private static void pushWordToStack(short word, Cpu cpu) {
 		cpu.getMemory()[cpu.getRegisters().getStackPointer() - 1] = (byte)((word >>> 8) & 0xff);
@@ -423,6 +439,13 @@ public class OpCodes {
 		setFlags(answer, cpu);
 		
 		return (byte) (answer & 0xff);
+	}
+	
+	private static short addWords(short word1, short word2, Cpu cpu) {
+		int answer = Short.toUnsignedInt(word1) + Short.toUnsignedInt(word2);
+		
+		cpu.getFlags().setCarry(answer > 0xffff);
+		return (short)(answer & 0xffff);
 	}
 	
 	private static void setFlags(short answer, Cpu cpu) {
