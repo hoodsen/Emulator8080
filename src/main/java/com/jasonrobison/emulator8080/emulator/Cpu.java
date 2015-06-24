@@ -47,6 +47,7 @@ public class Cpu {
 		opcodeExecutors.put((byte) 0xc9, OpCodes.ret());
 		opcodeExecutors.put((byte) 0xcd, OpCodes.callAddr());
 		opcodeExecutors.put((byte) 0xd5, OpCodes.pushDE());
+		opcodeExecutors.put((byte) 0xeb, OpCodes.xchgHLDE());
 		opcodeExecutors.put((byte) 0xe5, OpCodes.pushHL());
 		opcodeExecutors.put((byte) 0xfe, OpCodes.subByteA());
 	}

@@ -409,6 +409,24 @@ public class OpCodes {
 		};
 	}
 	
+	/**
+	 * 0xeb	XCHG
+	 * H <-> D
+	 * L <-> E
+	 */
+	public static OpCode xchgHLDE() {
+		return new OpCode() {
+			public void execute(Cpu cpu) {
+				LOGGER.debug(getCurrentAddressAsString(cpu) + "XCHG HL,DE ");
+				
+				short dE = cpu.getRegisters().getDE();
+				cpu.getRegisters().setDE(cpu.getRegisters().getHL());
+				cpu.getRegisters().setHL(dE);
+				
+				cpu.getRegisters().incrementProgramCounter();
+			}
+		};
+	}
 	
 	private static void pushWordToStack(short word, Cpu cpu) {
 		cpu.getMemory()[cpu.getRegisters().getStackPointer() - 1] = (byte)((word >>> 8) & 0xff);

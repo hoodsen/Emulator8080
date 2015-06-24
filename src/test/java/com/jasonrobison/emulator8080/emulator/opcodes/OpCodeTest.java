@@ -604,4 +604,24 @@ public class OpCodeTest {
 		assertTrue(cpu.getFlags().isCarry());
 	}
 	
+	/**
+	 * 0xeb	XCHG
+	 * H <-> D
+	 * L <-> E
+	 */
+	@Test
+	public void xchgHLDE() {
+		cpu.getMemory()[0] = (byte)0xeb;
+		cpu.getRegisters().setProgramCounter((short)0x0000);
+		
+		cpu.getRegisters().setHL((short)0x1111);
+		cpu.getRegisters().setDE((short)0x2222);
+		
+		OpCodes.xchgHLDE().execute(cpu);
+		
+		assertEquals((short)0x2222, cpu.getRegisters().getHL());
+		assertEquals((short)0x1111, cpu.getRegisters().getDE());
+		assertEquals((short)0x0001, cpu.getRegisters().getProgramCounter());
+	}
+	
 }
